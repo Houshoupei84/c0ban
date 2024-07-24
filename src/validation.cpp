@@ -1195,7 +1195,9 @@ bool ReadBlockFromDisk(CBlock& block, const FlatFilePos& pos, int nHeight, const
     bool isPostFork = nHeight >= Params().SwitchLyra2REv2_LWMA();
     bool isPostForkLyra2C0ban = nHeight >= Params().SwitchLyra2REvc0ban_LWMA();
     if (!CheckProofOfWork(block.GetPoWHash(isPostFork, isPostForkLyra2C0ban), block.nBits, isPostFork, consensusParams))
-        return error("ReadBlockFromDisk: Errors in block header at %s", pos.ToString());
+    {
+            return error("ReadBlockFromDisk: Errors in block header at %s", pos.ToString());
+    }
 
     return true;
 }
@@ -3348,7 +3350,6 @@ static bool CheckBlockHeader(const CBlockHeader& block, BlockValidationState& st
     if (fCheckPOW && !CheckProofOfWork(block.GetPoWHash(isPostFork, isPostForkLyra2C0ban), block.nBits, isPostFork, consensusParams)) {
         return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "high-hash", "proof of work failed");
     }
-
     return true;
 }
 
@@ -4348,7 +4349,7 @@ bool CVerifyDB::VerifyDB(const CChainParams& chainparams, CCoinsView *coinsview,
     }
     if (pindexFailure)
         return error("VerifyDB(): *** coin database inconsistencies found (last %i blocks, %i good transactions before that)\n", ::ChainActive().Height() - pindexFailure->nHeight + 1, nGoodTransactions);
-
+   
     // store block count as we move pindex at check level >= 4
     int block_count = ::ChainActive().Height() - pindex->nHeight;
 

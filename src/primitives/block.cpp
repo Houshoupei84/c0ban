@@ -8,8 +8,14 @@
 
 #include <hash.h>
 #include <tinyformat.h>
-
 #include <crypto/Lyra2RE/Lyra2RE.h>
+#include <iostream>
+#include <cstdint>
+#include <array>
+#include <cstring>
+#include <iomanip>
+#include <sstream>
+
 
 #define BEGIN(a)            ((char*)&(a))
 
